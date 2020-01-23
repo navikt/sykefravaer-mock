@@ -10,7 +10,7 @@ const cache = new NodeCache();
 
 const SYKEFRAVAER = "SYKEFRAVAER";
 const BRUKER = "BRUKER";
-const DEFAULT_SYKEFRAVAER = sykefravaer[0];
+const DEFAULT_SYKEFRAVAER = [sykefravaer[0]];
 const DEFAULT_BRUKER = brukere[0].id;
 cache.set(SYKEFRAVAER, DEFAULT_SYKEFRAVAER);
 cache.set(BRUKER, DEFAULT_BRUKER);
@@ -32,13 +32,23 @@ server.post("/bruker/:brukerId", (req, res) => {
   if (brukerId) {
     const aktuellBruker = brukere.find(bruker => bruker.id === brukerId);
     if (aktuellBruker) {
-      const aktuelleFravaer = aktuellBruker.sykefravaerIds.map(id => {
-        sykefravaer.find(sf => sf.id === id);
-      });
+      const aktuelleFravaer = aktuellBruker.sykefravaerIds.map(id =>
+        sykefravaer.find(sf => sf.id === id)
+      );
       cache.set(SYKEFRAVAER, aktuelleFravaer);
       cache.set(BRUKER, brukerId);
       res.sendStatus(200);
     }
+  } else {
+    res.sendStatus(500);
+  }
+});
+
+server.get("/sykefravaer/", (req, res) => {
+  console.log("get /sykefravaer/");
+  const fravaer = cache.get(SYKEFRAVAER);
+  if (fravaer) {
+    res.json(fravaer);
   } else {
     res.sendStatus(500);
   }
