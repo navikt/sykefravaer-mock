@@ -3,9 +3,15 @@ import NodeCache from "node-cache";
 import { sykefravaer } from "./data/sykefravaer";
 import { brukere } from "./data/brukere";
 import cors from "cors";
+import morganBody from "morgan-body";
+import morgan from "morgan";
+
+morgan("dev");
 
 const server = express();
+morganBody(server);
 server.use(cors());
+
 const cache = new NodeCache();
 
 const SYKEFRAVAER = "SYKEFRAVAER";
@@ -16,18 +22,15 @@ cache.set(SYKEFRAVAER, DEFAULT_SYKEFRAVAER);
 cache.set(BRUKER, DEFAULT_BRUKER);
 
 server.get("/brukere", (req, res) => {
-  console.log("get /brukere");
   res.json(brukere);
 });
 
 server.get("/bruker/", (req, res) => {
-  console.log("get /bruker/");
   const brukerId = cache.get(BRUKER);
   res.json(brukerId);
 });
 
 server.post("/bruker/:brukerId", (req, res) => {
-  console.log("post /bruker/:brukerId");
   const brukerId = req.params.brukerId;
   if (brukerId) {
     const aktuellBruker = brukere.find(bruker => bruker.id === brukerId);
@@ -45,7 +48,6 @@ server.post("/bruker/:brukerId", (req, res) => {
 });
 
 server.get("/sykefravaer/", (req, res) => {
-  console.log("get /sykefravaer/");
   const fravaer = cache.get(SYKEFRAVAER);
   if (fravaer) {
     res.json(fravaer);
@@ -55,7 +57,6 @@ server.get("/sykefravaer/", (req, res) => {
 });
 
 server.get("/sykefravaer/:sykefravaerId", (req, res) => {
-  console.log("get /sykefravaer/:sykefravaerId/");
   const sykefravaerId = req.params.sykefravaerId;
   if (sykefravaerId) {
     const aktueltFravaer = res.json(
@@ -70,19 +71,16 @@ server.get("/sykefravaer/:sykefravaerId", (req, res) => {
 });
 
 server.get("/sykmelding/:id", (req, res) => {
-  console.log("get /sykmelding/:id/");
   // TODO
   res.sendStatus(500);
 });
 
 server.post("/sykmelding/:id", (req, res) => {
-  console.log("post /sykmelding/:id/");
   // TODO
   res.sendStatus(500);
 });
 
 server.delete("/reset", (req, res) => {
-  console.log("delete /reset/");
   cache.flushAll();
   cache.set(SYKEFRAVAER, DEFAULT_SYKEFRAVAER);
 });
