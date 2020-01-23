@@ -4,7 +4,7 @@ import { bekreftetSykmelding } from "./sykmeldinger/bekreftetSykmelding";
 import { nySykmelding } from "./sykmeldinger/nysykmelding";
 import { sendtSykmelding } from "./sykmeldinger/sendtSykmelding";
 
-export const sykmeldingerMock = [
+export const sykmeldinger = [
   nySykmelding,
   avvistSykmelding,
   avbruttSykmelding,

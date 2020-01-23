@@ -2,6 +2,8 @@ import express from "express";
 import NodeCache from "node-cache";
 import { sykefravaer } from "./data/sykefravaer";
 import { brukere } from "./data/brukere";
+import { arbeidsgivere } from "./data/arbeidsgivere";
+import { sykmeldinger } from "./data/sykmeldinger";
 import cors from "cors";
 import morganBody from "morgan-body";
 import morgan from "morgan";
@@ -16,10 +18,13 @@ const cache = new NodeCache();
 
 const SYKEFRAVAER = "SYKEFRAVAER";
 const BRUKER = "BRUKER";
+const SYKMELDING = "SYKMELDING";
 const DEFAULT_SYKEFRAVAER = [sykefravaer[0]];
 const DEFAULT_BRUKER = brukere[0].id;
+const DEFAULT_SYKMELDING = sykmeldinger[0];
 cache.set(SYKEFRAVAER, DEFAULT_SYKEFRAVAER);
 cache.set(BRUKER, DEFAULT_BRUKER);
+cache.set(SYKMELDING, DEFAULT_SYKMELDING);
 
 server.get("/brukere", (req, res) => {
   res.json(brukere);
@@ -32,7 +37,6 @@ server.get("/bruker/", (req, res) => {
 
 server.post("/bruker/:brukerId", (req, res) => {
   const brukerId = req.params.brukerId;
-  console.log("asd", brukerId);
   if (brukerId) {
     const aktuellBruker = brukere.find(bruker => bruker.id === brukerId);
     if (aktuellBruker) {
@@ -72,8 +76,18 @@ server.get("/sykefravaer/:sykefravaerId", (req, res) => {
 });
 
 server.get("/sykmelding/:id", (req, res) => {
-  // TODO
-  res.sendStatus(500);
+  const sykmelding = sykmeldinger.find(
+    melding => melding.sykmelding.id === req.params.id
+  );
+  res.json(sykmelding);
+});
+
+server.get("/informasjon/arbeidsgivere/:sykmeldingId", (req, res) => {
+  res.json(arbeidsgivere);
+});
+
+server.post("/sykmeldinger/:id/actions/erUtenforVentetid", (req, res) => {
+  res.json({ erUtenforVentetid: false });
 });
 
 server.post("/sykmelding/:id", (req, res) => {
