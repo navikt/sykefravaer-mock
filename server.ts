@@ -32,6 +32,7 @@ server.get("/bruker/", (req, res) => {
 
 server.post("/bruker/:brukerId", (req, res) => {
   const brukerId = req.params.brukerId;
+  console.log("asd", brukerId);
   if (brukerId) {
     const aktuellBruker = brukere.find(bruker => bruker.id === brukerId);
     if (aktuellBruker) {
