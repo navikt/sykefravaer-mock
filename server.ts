@@ -130,13 +130,57 @@ server.post("/sykmelding/send/", (req, res) => {
 });
 
 server.post("/sykmelding/bekreft/", (req, res) => {
-  // TODO
-  res.sendStatus(500);
+  const sykmeldingerDb: SykmeldingData[] | undefined = cache.get(SYKMELDINGER);
+  if (sykmeldingerDb) {
+    const { id, skjemaData } = req.body;
+    const sykmelding = sykmeldingerDb.find(
+      melding => melding.sykmelding.id === id
+    );
+    if (!sykmelding) {
+      res.sendStatus(500);
+    } else {
+      const oppdatertSykmelding = {
+        sykmelding: sykmelding.sykmelding,
+        status: statusGenerator("bekreftet")
+      };
+
+      const utenSykmelding = sykmeldingerDb.filter(
+        melding => melding.sykmelding.id !== id
+      );
+
+      cache.set(SYKMELDINGER, [...utenSykmelding, oppdatertSykmelding]);
+      res.sendStatus(200);
+    }
+  } else {
+    res.sendStatus(500);
+  }
 });
 
 server.post("/sykmelding/avbryt/:id", (req, res) => {
-  // TODO
-  res.sendStatus(500);
+  const sykmeldingerDb: SykmeldingData[] | undefined = cache.get(SYKMELDINGER);
+  if (sykmeldingerDb) {
+    const { id } = req.params;
+    const sykmelding = sykmeldingerDb.find(
+      melding => melding.sykmelding.id === id
+    );
+    if (!sykmelding) {
+      res.sendStatus(500);
+    } else {
+      const oppdatertSykmelding = {
+        sykmelding: sykmelding.sykmelding,
+        status: statusGenerator("avbrutt")
+      };
+
+      const utenSykmelding = sykmeldingerDb.filter(
+        melding => melding.sykmelding.id !== id
+      );
+
+      cache.set(SYKMELDINGER, [...utenSykmelding, oppdatertSykmelding]);
+      res.sendStatus(200);
+    }
+  } else {
+    res.sendStatus(500);
+  }
 });
 
 server.get("/reset", (req, res) => {
