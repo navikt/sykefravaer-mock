@@ -10,6 +10,7 @@ import morgan from "morgan";
 import { statusUpdater } from "./utils/mockUtils";
 import { SykmeldingData } from "./types/sykmeldingDataTypes";
 import { StatusTyper } from "./types/sykmeldingTypes";
+import { Sykefravaer, SykefravaerData } from "./types/sykefravaerTypes";
 
 // Server setup
 morgan("dev");
@@ -26,17 +27,17 @@ const SYKEFRAVAER = "SYKEFRAVAER";
 const BRUKER = "BRUKER";
 const SYKMELDING = "SYKMELDING";
 const SYKMELDINGER = "SYKMELDINGER";
-const DEFAULT_SYKEFRAVAER = [sykefravaer[0]];
 const DEFAULT_BRUKER = brukere[0].id;
 const DEFAULT_SYKMELDING = sykmeldinger[0];
 const DEFAULT_SYKMELDINGER = sykmeldinger;
+const DEFAULT_SYKEFRAVAER = sykefravaer;
 
 const setDefaults = () => {
   cache.flushAll();
-  cache.set(SYKEFRAVAER, DEFAULT_SYKEFRAVAER);
   cache.set(BRUKER, DEFAULT_BRUKER);
   cache.set(SYKMELDING, DEFAULT_SYKMELDING);
   cache.set(SYKMELDINGER, DEFAULT_SYKMELDINGER);
+  cache.set(SYKEFRAVAER, DEFAULT_SYKEFRAVAER);
 };
 
 const getSykmeldinger = () => {
@@ -45,6 +46,64 @@ const getSykmeldinger = () => {
     return [];
   }
   return sykmeldingerDb;
+};
+
+const getSykefravaer = () => {
+  const fravaer: SykefravaerData[] | undefined = cache.get(SYKEFRAVAER);
+  if (!fravaer) {
+    return [];
+  }
+  return fravaer;
+};
+
+const populateFravaerFromIds = (ids: string[]): Sykefravaer[] => {
+  return ids.reduce((hentedeFravaer: Sykefravaer[], id) => {
+    const hentetFravaer = populateFravaerFromId(id);
+    if (hentetFravaer) {
+      return [...hentedeFravaer, hentetFravaer];
+    }
+    return hentedeFravaer;
+  }, []);
+};
+
+const populateFravaerFromId = (id: string): Sykefravaer | undefined => {
+  const fravaerDb = getSykefravaer();
+  const fravaer = fravaerDb.find(f => f.id === id);
+
+  if (!fravaer) {
+    return undefined;
+  }
+
+  const sykmeldingerDb = getSykmeldinger();
+
+  const sykmeldinger = fravaer.sykmeldinger.reduce(
+    (meldinger: SykmeldingData[], meldingId) => {
+      const melding = sykmeldingerDb.find(m => m.sykmelding.id === meldingId);
+      if (melding) {
+        return [...meldinger, melding];
+      }
+      return meldinger;
+    },
+    []
+  );
+
+  return {
+    ...fravaer,
+    sykmeldinger,
+    // TODO: Søknader.
+    soknader: []
+  };
+};
+
+const getFravaerForBruker = () => {
+  const brukerId = cache.get(BRUKER);
+  const fravaerIds = brukere.find(b => b.id === brukerId)?.sykefravaerIds;
+
+  if (!fravaerIds) {
+    return [];
+  }
+
+  return populateFravaerFromIds(fravaerIds);
 };
 
 server.get("/reset", (req, res) => {
@@ -71,10 +130,6 @@ server.post("/bruker/:brukerId", (req, res) => {
   if (brukerId) {
     const aktuellBruker = brukere.find(bruker => bruker.id === brukerId);
     if (aktuellBruker) {
-      const aktuelleFravaer = aktuellBruker.sykefravaerIds.map(id =>
-        sykefravaer.find(sf => sf.id === id)
-      );
-      cache.set(SYKEFRAVAER, aktuelleFravaer);
       cache.set(BRUKER, brukerId);
       res.sendStatus(200);
     }
@@ -84,7 +139,7 @@ server.post("/bruker/:brukerId", (req, res) => {
 });
 
 server.get("/sykefravaer/", (req, res) => {
-  const fravaer = cache.get(SYKEFRAVAER);
+  const fravaer = getFravaerForBruker();
   if (fravaer) {
     res.json(fravaer);
   } else {

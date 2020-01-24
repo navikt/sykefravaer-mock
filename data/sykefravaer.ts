@@ -1,19 +1,14 @@
-import { Sykefravaer } from "../types/sykefravaerTypes";
-import { nySykmelding } from "./sykmeldinger/nysykmelding";
-import { SykmeldingData } from "../types/sykmeldingDataTypes";
+import { SykefravaerData } from "../types/sykefravaerTypes";
 
-export const sykefravaer: Sykefravaer[] = [
+export const sykefravaer: SykefravaerData[] = [
   {
     id: "enNysykmelding",
-    sykmeldinger: [new SykmeldingData(nySykmelding)],
+    sykmeldinger: ["ny123"],
     soknader: []
   },
   {
-    id: "toNyeSykmeldinger",
-    sykmeldinger: [
-      new SykmeldingData(nySykmelding),
-      new SykmeldingData(nySykmelding)
-    ],
+    id: "enNySykmeldingEnAvvistSykmelding",
+    sykmeldinger: ["ny123", "ny123"],
     soknader: []
   }
 ];

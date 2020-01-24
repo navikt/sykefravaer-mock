@@ -1,8 +1,20 @@
 import { SykmeldingData } from "./sykmeldingDataTypes";
 import { Soknad } from "./soknadTypes";
-import { BrukerId } from "../data/brukere";
 
-export type sykefravaerId = "toNyeSykmeldinger" | "enNysykmelding";
+export type sykefravaerId =
+  | "enNysykmelding"
+  | "enNySykmeldingEnAvvistSykmelding";
+
+export class SykefravaerData {
+  id: sykefravaerId;
+  sykmeldinger: string[];
+  soknader: string[];
+  constructor(data: any) {
+    this.id = data.id;
+    this.sykmeldinger = data.sykmeldinger;
+    this.soknader = data.soknader;
+  }
+}
 
 export class Sykefravaer {
   id: sykefravaerId;
