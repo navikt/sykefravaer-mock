@@ -7,24 +7,31 @@ import { sykmeldinger } from "./data/sykmeldinger";
 import cors from "cors";
 import morganBody from "morgan-body";
 import morgan from "morgan";
+import { statusGenerator } from "./utils/mockUtils";
+import { SykmeldingData } from "./types/sykmeldingDataTypes";
 
+// Server setup
 morgan("dev");
-
 const server = express();
 morganBody(server);
 server.use(cors());
+server.use(express.json());
 
+// Cache setup
 const cache = new NodeCache();
 
 const SYKEFRAVAER = "SYKEFRAVAER";
 const BRUKER = "BRUKER";
 const SYKMELDING = "SYKMELDING";
+const SYKMELDINGER = "SYKMELDINGER";
 const DEFAULT_SYKEFRAVAER = [sykefravaer[0]];
 const DEFAULT_BRUKER = brukere[0].id;
 const DEFAULT_SYKMELDING = sykmeldinger[0];
+const DEFAULT_SYKMELDINGER = sykmeldinger;
 cache.set(SYKEFRAVAER, DEFAULT_SYKEFRAVAER);
 cache.set(BRUKER, DEFAULT_BRUKER);
 cache.set(SYKMELDING, DEFAULT_SYKMELDING);
+cache.set(SYKMELDINGER, DEFAULT_SYKMELDINGER);
 
 server.get("/brukere", (req, res) => {
   res.json(brukere);
@@ -76,10 +83,15 @@ server.get("/sykefravaer/:sykefravaerId", (req, res) => {
 });
 
 server.get("/sykmelding/:id", (req, res) => {
-  const sykmelding = sykmeldinger.find(
-    melding => melding.sykmelding.id === req.params.id
-  );
-  res.json(sykmelding);
+  const sykmeldingerDb: SykmeldingData[] | undefined = cache.get(SYKMELDINGER);
+  if (sykmeldingerDb) {
+    const sykmelding = sykmeldingerDb.find(
+      melding => melding.sykmelding.id === req.params.id
+    );
+    res.json(sykmelding);
+  } else {
+    res.sendStatus(500);
+  }
 });
 
 server.get("/informasjon/arbeidsgivere/:sykmeldingId", (req, res) => {
@@ -90,14 +102,50 @@ server.post("/sykmeldinger/:id/actions/erUtenforVentetid", (req, res) => {
   res.json({ erUtenforVentetid: false });
 });
 
-server.post("/sykmelding/:id", (req, res) => {
+server.post("/sykmelding/send/", (req, res) => {
+  const sykmeldingerDb: SykmeldingData[] | undefined = cache.get(SYKMELDINGER);
+  if (sykmeldingerDb) {
+    const { id, skjemaData } = req.body;
+    const sykmelding = sykmeldingerDb.find(
+      melding => melding.sykmelding.id === id
+    );
+    if (!sykmelding) {
+      res.sendStatus(500);
+    } else {
+      const oppdatertSykmelding = {
+        sykmelding: sykmelding.sykmelding,
+        status: statusGenerator("sendt")
+      };
+
+      const utenSykmelding = sykmeldingerDb.filter(
+        melding => melding.sykmelding.id !== id
+      );
+
+      cache.set(SYKMELDINGER, [...utenSykmelding, oppdatertSykmelding]);
+      res.sendStatus(200);
+    }
+  } else {
+    res.sendStatus(500);
+  }
+});
+
+server.post("/sykmelding/bekreft/", (req, res) => {
   // TODO
   res.sendStatus(500);
 });
 
-server.delete("/reset", (req, res) => {
+server.post("/sykmelding/avbryt/:id", (req, res) => {
+  // TODO
+  res.sendStatus(500);
+});
+
+server.get("/reset", (req, res) => {
   cache.flushAll();
   cache.set(SYKEFRAVAER, DEFAULT_SYKEFRAVAER);
+  cache.set(BRUKER, DEFAULT_BRUKER);
+  cache.set(SYKMELDING, DEFAULT_SYKMELDING);
+  cache.set(SYKMELDINGER, DEFAULT_SYKMELDINGER);
+  res.sendStatus(200);
 });
 
 server.listen(5000, () => {
