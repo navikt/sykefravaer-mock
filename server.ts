@@ -7,8 +7,9 @@ import { sykmeldinger } from "./data/sykmeldinger";
 import cors from "cors";
 import morganBody from "morgan-body";
 import morgan from "morgan";
-import { statusGenerator } from "./utils/mockUtils";
+import { statusUpdater } from "./utils/mockUtils";
 import { SykmeldingData } from "./types/sykmeldingDataTypes";
+import { StatusTyper } from "./types/sykmeldingTypes";
 
 // Server setup
 morgan("dev");
@@ -134,7 +135,8 @@ server.post("/sykmelding/send/", (req, res) => {
   } else {
     const oppdatertSykmelding = {
       sykmelding: sykmelding.sykmelding,
-      status: statusGenerator("sendt")
+      // TODO: Hent arbeidsgiver og orgnummer
+      status: statusUpdater(StatusTyper.SENDT)
     };
 
     const utenSykmelding = sykmeldingerDb.filter(
@@ -158,7 +160,7 @@ server.post("/sykmelding/bekreft/", (req, res) => {
   } else {
     const oppdatertSykmelding = {
       sykmelding: sykmelding.sykmelding,
-      status: statusGenerator("bekreftet")
+      status: statusUpdater(StatusTyper.BEKREFTET)
     };
 
     const utenSykmelding = sykmeldingerDb.filter(
@@ -182,7 +184,7 @@ server.post("/sykmelding/avbryt/:id", (req, res) => {
   } else {
     const oppdatertSykmelding = {
       sykmelding: sykmelding.sykmelding,
-      status: statusGenerator("avbrutt")
+      status: statusUpdater(StatusTyper.AVBRUTT)
     };
 
     const utenSykmelding = sykmeldingerDb.filter(
