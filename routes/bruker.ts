@@ -1,6 +1,7 @@
 import { Router } from "express";
-import cache, { BRUKER } from "../cache";
+import cache, { BRUKER, SYKEFRAVAER } from "../cache";
 import { brukere } from "../data/brukere";
+import { getFravaerForBruker } from "../utils/sykefravaerUtils";
 
 const brukerRouter = Router();
 
@@ -19,8 +20,9 @@ brukerRouter.post("/:brukerId", (req, res) => {
   } else {
     cache.set(BRUKER, brukerId);
     // cache sykefravaer knyttet til bruker
-    //const aktuelleSykefravaer = getFravaerForBruker();
-    //cache.set(SYKEFRAVAER, aktuelleSykefravaer);
+    const aktuelleSykefravaer = getFravaerForBruker();
+    console.log(aktuelleSykefravaer);
+    cache.set(SYKEFRAVAER, aktuelleSykefravaer);
     res.sendStatus(200);
   }
 });
