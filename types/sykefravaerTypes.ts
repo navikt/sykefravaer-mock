@@ -20,6 +20,7 @@ export class Sykefravaer {
   id: sykefravaerId;
   sykmeldinger: SykmeldingData[];
   soknader: Soknad[];
+  
   constructor(data: any) {
     this.id = data.id;
     this.sykmeldinger = data.sykmeldinger;
