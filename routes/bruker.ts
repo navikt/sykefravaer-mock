@@ -18,11 +18,8 @@ brukerRouter.post("/:brukerId", (req, res) => {
   if (!brukerId || !aktuellBruker) {
     res.sendStatus(500);
   } else {
+    // Sett bruker i cache
     cache.set(BRUKER, brukerId);
-    // cache sykefravaer knyttet til bruker
-    const aktuelleSykefravaer = getFravaerForBruker();
-    console.log(aktuelleSykefravaer);
-    cache.set(SYKEFRAVAER, aktuelleSykefravaer);
     res.sendStatus(200);
   }
 });

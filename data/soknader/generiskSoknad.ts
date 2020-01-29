@@ -1,7 +1,7 @@
 export const generiskSoknad = {
   id: "1e1935ba-ceab-472d-bb25-88d1bc1d8f1c",
   aktorId: "1656138067995",
-  sykmeldingId: "ef081c8b-2aac-4f8d-8c64-5f629053f0c1",
+  sykmeldingId: "ny123",
   soknadstype: "ARBEIDSTAKERE",
   status: "SENDT",
   fom: "2019-09-21",

@@ -1,22 +1,50 @@
 import { Sykefravaer, SykefravaerData } from "../types/sykefravaerTypes";
 import { SykmeldingData } from "../types/sykmeldingDataTypes";
-import cache, { SYKMELDINGER, SYKEFRAVAER, BRUKER } from "../cache";
+import cache, { SYKMELDINGER, SYKEFRAVAER, BRUKER, SOKNAD } from "../cache";
 import { brukere } from "../data/brukere";
+import { sykefravaer } from "../data/sykefravaer";
+import { Soknad } from "../types/soknadTypes/soknadTypes";
 
-const getSykmeldinger = () => {
-  const sykmeldingerDb: SykmeldingData[] | undefined = cache.get(SYKMELDINGER);
-  if (!sykmeldingerDb) {
+const getSykmeldingerFraCache = () => {
+  const sykmeldingerFraCache: SykmeldingData[] | undefined = cache.get(
+    SYKMELDINGER
+  );
+  if (!sykmeldingerFraCache) {
     return [];
   }
-  return sykmeldingerDb;
+  const sykmeldinger = sykmeldingerFraCache.map(
+    sykmelding => new SykmeldingData(sykmelding)
+  );
+  return sykmeldinger;
 };
 
-const getSykefravaer = () => {
-  const fravaer: SykefravaerData[] | undefined = cache.get(SYKEFRAVAER);
-  if (!fravaer) {
+const getSoknaderFraCache = () => {
+  const soknaderFraCache: Soknad[] | undefined = cache.get(SOKNAD);
+  if (!soknaderFraCache) {
     return [];
   }
-  return fravaer;
+  const soknader = soknaderFraCache.map(soknad => new Soknad(soknad));
+  return soknader;
+};
+
+export const getSykefravaerFraCache = () => {
+  const sykefravaerFraCache: SykefravaerData[] | undefined = cache.get(
+    SYKEFRAVAER
+  );
+  if (!sykefravaerFraCache) {
+    return [];
+  }
+  return sykefravaerFraCache;
+};
+
+export const getFravaerForBruker = (): Sykefravaer[] => {
+  const brukerId = cache.get(BRUKER);
+  const fravaerIds = brukere.find(b => b.id === brukerId)?.sykefravaerIds;
+
+  if (!fravaerIds) {
+    return [];
+  }
+  return getFravaerFromIds(fravaerIds);
 };
 
 const getFravaerFromIds = (ids: string[]): Sykefravaer[] => {
@@ -30,42 +58,42 @@ const getFravaerFromIds = (ids: string[]): Sykefravaer[] => {
 };
 
 const getFravaerFromId = (id: string): Sykefravaer | undefined => {
-  const fravaerDb = getSykefravaer();
+  const fravaerDb = sykefravaer;
   const fravaer = fravaerDb.find(f => f.id === id);
 
   if (!fravaer) {
     return undefined;
   }
 
-  const sykmeldingerDb = getSykmeldinger();
-  // const soknadDb = getSoknader();
-
+  const sykmeldingerFraCache = getSykmeldingerFraCache();
   const sykmeldinger = fravaer.sykmeldinger.reduce(
-    (meldinger: SykmeldingData[], meldingId) => {
-      const melding = sykmeldingerDb.find(m => m.sykmelding.id === meldingId);
-      if (melding) {
-        return [...meldinger, melding];
+    (sykmeldinger: SykmeldingData[], sykmeldingId) => {
+      const sykmelding = sykmeldingerFraCache.find(
+        sm => sm.sykmelding.id === sykmeldingId
+      );
+      if (sykmelding) {
+        return [...sykmeldinger, sykmelding];
       }
-      return meldinger;
+      return sykmeldinger;
     },
     []
   );
 
+  // Hent soknader knyttet til hver sykmelding funnet over
+  const soknaderFraCache = getSoknaderFraCache();
+  const soknader = soknaderFraCache.reduce((soknader: Soknad[], soknad) => {
+    const tilhorerSykmelding = sykmeldinger.find(
+      sykmelding => sykmelding.sykmelding.id === soknad.sykmeldingId
+    );
+    if (tilhorerSykmelding) {
+      return [...soknader, soknad];
+    }
+    return soknader;
+  }, []);
+
   return {
     ...fravaer,
     sykmeldinger,
-    // TODO: Søknader.
-    soknader: []
+    soknader
   };
-};
-
-export const getFravaerForBruker = () => {
-  const brukerId = cache.get(BRUKER);
-  const fravaerIds = brukere.find(b => b.id === brukerId)?.sykefravaerIds;
-
-  if (!fravaerIds) {
-    return [];
-  }
-  // sjekk først om
-  return getFravaerFromIds(fravaerIds);
 };

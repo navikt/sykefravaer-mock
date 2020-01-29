@@ -13,9 +13,9 @@ import { initializeCache } from "./cache";
 
 import { brukere } from "./data/brukere";
 
-
 // Server setup
 morgan("dev");
+const PORT = 5000;
 const server = express();
 morganBody(server);
 server.use(cors());
@@ -43,9 +43,9 @@ server.use("/sykmelding", sykmeldingRouter);
 // Sykmeldinger routes
 server.use("/sykmeldinger", sykmeldingerRouter);
 // Informasjon routes
-server.use('/informasjon,', informasjonRouter);
+server.use("/informasjon,", informasjonRouter);
 
-
-server.listen(5000, () => {
-  console.log("server running on port 5000");
+// Start server
+server.listen(PORT, () => {
+  console.log(`server running on port ${PORT}`);
 });
