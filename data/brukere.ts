@@ -17,7 +17,7 @@ export const brukere: Bruker[] = [
   {
     id: "2",
     label: "Ny sykmelding, inaktiv søknad",
-    sykefravaerIds: ["toNyeSykmeldinger"]
+    sykefravaerIds: ["enNySykmeldingEnAvvistSykmelding"]
   } /* ,
   {
     value: "3",
