@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { getFravaerForBruker, getSykefravaerFraCache } from "../utils/sykefravaerUtils";
+import { getFravaerForBruker } from "../utils/sykefravaerUtils";
+import { getSykefravaerFraCache } from "../cache";
 
 const sykefravaerRouter = Router();
 
@@ -17,7 +18,9 @@ sykefravaerRouter.get("/", (req, res) => {
 sykefravaerRouter.get("/:sykefravaerId", (req, res) => {
   const sykefravaerId = req.params.sykefravaerId;
   if (sykefravaerId) {
-    const aktueltFravaer = getSykefravaerFraCache().find(sf => sf.id === sykefravaerId);
+    const aktueltFravaer = getSykefravaerFraCache().find(
+      sf => sf.id === sykefravaerId
+    );
     if (aktueltFravaer) {
       res.json(aktueltFravaer);
     }

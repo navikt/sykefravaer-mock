@@ -4,12 +4,16 @@ import { Soknad } from "../types/soknadTypes/soknadTypes";
 
 export const genererNySoknad = (
   sykmeldingId: string,
-  soknadStatus: RSSoknadstatus
+  soknadStatus: RSSoknadstatus,
+  fom: Date,
+  tom: Date
 ): Soknad => {
   const soknad: Soknad = new Soknad({
     ...generiskSoknad,
     sykmeldingId: sykmeldingId,
-    status: soknadStatus
+    status: soknadStatus,
+    fom: fom,
+    tom: tom,
   });
   return soknad;
 };

@@ -3,6 +3,9 @@ import { sykefravaer } from "./data/sykefravaer";
 import { brukere } from "./data/brukere";
 import { sykmeldinger } from "./data/sykmeldinger";
 import { soknader } from "./data/soknader";
+import { SykmeldingData } from "./types/sykmeldingDataTypes";
+import { Soknad } from "./types/soknadTypes/soknadTypes";
+import { SykefravaerData } from "./types/sykefravaerTypes";
 
 const cache = new NodeCache();
 
@@ -25,6 +28,38 @@ export const initializeCache = (): void => {
   cache.set(SYKMELDINGER, DEFAULT_SYKMELDINGER);
   cache.set(SYKEFRAVAER, DEFAULT_SYKEFRAVAER);
   cache.set(SOKNAD, DEFAULT_SOKNAD);
+};
+
+export const getSykmeldingerFraCache = () => {
+  const sykmeldingerFraCache: SykmeldingData[] | undefined = cache.get(
+    SYKMELDINGER
+  );
+  if (!sykmeldingerFraCache) {
+    return [];
+  }
+  const sykmeldinger = sykmeldingerFraCache.map(
+    sykmelding => new SykmeldingData(sykmelding)
+  );
+  return sykmeldinger;
+};
+
+export const getSoknaderFraCache = () => {
+  const soknaderFraCache: Soknad[] | undefined = cache.get(SOKNAD);
+  if (!soknaderFraCache) {
+    return [];
+  }
+  const soknader = soknaderFraCache.map(soknad => new Soknad(soknad));
+  return soknader;
+};
+
+export const getSykefravaerFraCache = () => {
+  const sykefravaerFraCache: SykefravaerData[] | undefined = cache.get(
+    SYKEFRAVAER
+  );
+  if (!sykefravaerFraCache) {
+    return [];
+  }
+  return sykefravaerFraCache;
 };
 
 export default cache;

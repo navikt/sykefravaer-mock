@@ -18,9 +18,9 @@ import { brukere } from "./data/brukere";
 morgan("dev");
 const PORT = 5000;
 const server = express();
+server.use(express.json());
 morganBody(server);
 server.use(cors());
-server.use(express.json());
 
 // Cache setup
 initializeCache();
