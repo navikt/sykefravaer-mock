@@ -4,14 +4,15 @@ import {
   getRandomNumber,
   generatePastDate,
   generateFutureDate
-} from "../../../utils/mockUtils";
+} from "../../../../../utils/mockUtils";
 
-export const nySykmeldingVariasjon1Sykmelding = {
+export const ferdigSykmeldingVariasjon1SykmeldingB = {
   status: {
-    status: "ny"
+    status: "sendt",
+    dato: generatePastDate(50)
   },
   sykmelding: {
-    id: "ny-sykmelding-variasjon-1-sykmelding",
+    id: "ferdig-sykmelding-variasjon-1-sykmelding-b",
     msgId: "123124334",
     pasientAktoerId: "41234123",
     medisinskVurdering: {
@@ -29,8 +30,8 @@ export const nySykmeldingVariasjon1Sykmelding = {
     },
     perioder: [
       {
-        fom: generatePastDate(2),
-        tom: generateFutureDate(12),
+        fom: generatePastDate(55),
+        tom: generatePastDate(45),
         reisetilskudd: false
       }
     ],
@@ -39,9 +40,9 @@ export const nySykmeldingVariasjon1Sykmelding = {
     },
     utdypendeOpplysninger: {},
     kontaktMedPasient: {
-      kontaktDato: generatePastDate(2)
+      kontaktDato: generatePastDate(55)
     },
-    behandletTidspunkt: generatePastDate(2),
+    behandletTidspunkt: generatePastDate(55),
     behandler: {
       fornavn: "Fornavn",
       mellomnavn: null,
@@ -63,8 +64,8 @@ export const nySykmeldingVariasjon1Sykmelding = {
       navn: "NAV Test generator",
       versjon: "1.0"
     },
-    syketilfelleStartDato: generatePastDate(2),
-    signaturDato: generatePastDate(2),
+    syketilfelleStartDato: generatePastDate(55),
+    signaturDato: generatePastDate(55),
     navnFastlege: "Doktor Legesen"
   }
 };
