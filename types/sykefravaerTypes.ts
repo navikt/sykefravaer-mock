@@ -10,7 +10,7 @@ export type sykefravaerId =
   | "enNySykmeldingEnAvvistSykmelding";
 
 export class SykefravaerData {
-  id: sykefravaerId;
+  id: string; //TODO: change back to sykefravaerId
   sykmeldinger: string[];
   constructor(data: any) {
     this.id = data.id;
@@ -19,10 +19,10 @@ export class SykefravaerData {
 }
 
 export class Sykefravaer {
-  id: sykefravaerId;
+  id: string; //TODO: change back to sykefravaerId
   sykmeldinger: SykmeldingData[];
   soknader: Soknad[];
-  
+
   constructor(data: any) {
     this.id = data.id;
     this.sykmeldinger = data.sykmeldinger;

@@ -48,10 +48,7 @@ sykmeldingRouter.post("/send/", (req, res) => {
     //Opprett søknad med riktig sykmeldingid
     const { fom, tom } = oppdatertSykmelding.sykmelding.perioder[0]; //Midlertidig. til vi vet hvordan en søknad skal opprettes
     const nySoknad = genererNySoknad(
-<<<<<<< Updated upstream
-=======
       "soknadid",
->>>>>>> Stashed changes
       id,
       RSSoknadstatus.NY,
       dayjs(fom).format("YYYY-MM-DD"),
