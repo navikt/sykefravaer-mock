@@ -46,7 +46,7 @@ server.use("/sykmeldinger", sykmeldingerRouter);
 // Soknad routes
 server.use("/soknad", soknadRouter);
 // Informasjon routes
-server.use("/informasjon,", informasjonRouter);
+server.use("/informasjon", informasjonRouter);
 
 // Start server
 server.listen(PORT, () => {
