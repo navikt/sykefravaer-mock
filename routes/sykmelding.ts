@@ -10,6 +10,7 @@ import { statusUpdater } from "../utils/mockUtils";
 import { StatusTyper } from "../types/sykmeldingTypes";
 import { genererNySoknad } from "../utils/soknadUtils";
 import { RSSoknadstatus } from "../types/soknadTypes/rs-types/rs-soknadstatus";
+import dayjs = require("dayjs");
 
 const sykmeldingRouter = Router();
 
@@ -46,9 +47,9 @@ sykmeldingRouter.post("/send/", (req, res) => {
 
     //Opprett søknad med riktig sykmeldingid
     const { fom, tom } = oppdatertSykmelding.sykmelding.perioder[0]; //Midlertidig. til vi vet hvordan en søknad skal opprettes
-    const nySoknad = genererNySoknad(id, RSSoknadstatus.NY, fom, tom);
-    const sokmeldingDb = getSoknaderFraCache();
-    cache.set(SOKNAD, [...sokmeldingDb, nySoknad]);
+    const nySoknad = genererNySoknad(id, RSSoknadstatus.NY, dayjs(fom).format('YYYY-MM-DD'), dayjs(tom).format('YYYY-MM-DD'));
+    const soknaderDb = getSoknaderFraCache();
+    cache.set(SOKNAD, [...soknaderDb, nySoknad]);
 
     res.sendStatus(200);
   }
@@ -78,8 +79,9 @@ sykmeldingRouter.post("/bekreft/", (req, res) => {
     //Opprett søknad med riktig sykmeldingid
     const { fom, tom } = oppdatertSykmelding.sykmelding.perioder[0]; //Midlertidig. til vi vet hvordan en søknad skal opprettes
     const nySoknad = genererNySoknad(id, RSSoknadstatus.NY, fom, tom);
-    const sokmeldingDb = getSoknaderFraCache();
-    cache.set(SOKNAD, [...sokmeldingDb, nySoknad]);
+    //console.log(nySoknad);
+    const soknaderDb = getSoknaderFraCache();
+    cache.set(SOKNAD, [...soknaderDb, nySoknad]);
 
     res.sendStatus(200);
   }

@@ -1,4 +1,4 @@
-import { Sykefravaer, SykefravaerData } from "../types/sykefravaerTypes";
+import { Sykefravaer } from "../types/sykefravaerTypes";
 import { SykmeldingData } from "../types/sykmeldingDataTypes";
 import cache, {
   BRUKER,

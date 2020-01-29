@@ -60,7 +60,6 @@ export class Soknad {
         orgnummer: soknad.arbeidsgiver.orgnummer
       };
     }
-    // @ts-ignore
     this.sporsmal = rsToSporsmal(soknad.sporsmal, undefined);
     this.soknadPerioder = soknad.soknadPerioder;
   }
@@ -84,7 +83,6 @@ export class Sporsmal {
   constructor(spm: RSSporsmal, kriterie: string) {
     this.id = spm.id;
     const orgarr: string[] = spm.tag.split("_");
-    // @ts-ignore
     const numtag: number = parseInt(orgarr.pop());
     let tag = spm.tag;
     if (!isNaN(numtag)) {
