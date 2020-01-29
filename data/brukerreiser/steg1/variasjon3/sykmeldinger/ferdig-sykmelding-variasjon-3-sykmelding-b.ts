@@ -6,12 +6,13 @@ import {
     generateFutureDate
   } from "../../../../../utils/mockUtils";
   
-  export const nySykmeldingVariasjon2SykmeldingB = {
+  export const ferdigSykmeldingVariasjon3SykmeldingB = {
     status: {
-      status: "ny"
+      status: "sendt",
+      dato: generatePastDate(351)
     },
     sykmelding: {
-      id: "ny-sykmelding-variasjon-2-sykmelding-b",
+      id: "ferdig-sykmelding-variasjon-3-sykmelding-b",
       msgId: "123124334",
       pasientAktoerId: "41234123",
       medisinskVurdering: {
@@ -22,15 +23,15 @@ import {
       },
       skjermesForPasient: true,
       arbeidsgiver: {
-        harArbeidsgiver: "FLERE_ARBEIDSGIVERE",
-        navn: "Brennevin AS",
+        harArbeidsgiver: "EN_ARBEIDSGIVER",
+        navn: "Planter og andre buskvekster AS",
         yrkesbetegnelse: "Gartner",
         stillingsprosent: 100
       },
       perioder: [
         {
-          fom: generateFutureDate(2),
-          tom: generateFutureDate(18),
+          fom: generatePastDate(351),
+          tom: generatePastDate(344),
           reisetilskudd: false
         }
       ],
@@ -39,9 +40,9 @@ import {
       },
       utdypendeOpplysninger: {},
       kontaktMedPasient: {
-        kontaktDato: generatePastDate(0)
+        kontaktDato: generatePastDate(351)
       },
-      behandletTidspunkt: generatePastDate(0),
+      behandletTidspunkt: generatePastDate(351),
       behandler: {
         fornavn: "Fornavn",
         mellomnavn: null,
@@ -63,8 +64,8 @@ import {
         navn: "NAV Test generator",
         versjon: "1.0"
       },
-      syketilfelleStartDato: generatePastDate(0),
-      signaturDato: generatePastDate(0),
+      syketilfelleStartDato: generatePastDate(351),
+      signaturDato: generatePastDate(351),
       navnFastlege: "Doktor Legesen"
     }
   };

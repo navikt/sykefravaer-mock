@@ -29,7 +29,7 @@ export const nySykmeldingVariasjon1Sykmelding = {
     },
     perioder: [
       {
-        fom: generatePastDate(2),
+        fom: generateFutureDate(2),
         tom: generateFutureDate(18),
         reisetilskudd: false
       }
@@ -39,9 +39,9 @@ export const nySykmeldingVariasjon1Sykmelding = {
     },
     utdypendeOpplysninger: {},
     kontaktMedPasient: {
-      kontaktDato: generatePastDate(2)
+      kontaktDato: generatePastDate(0)
     },
-    behandletTidspunkt: generatePastDate(2),
+    behandletTidspunkt: generatePastDate(0),
     behandler: {
       fornavn: "Fornavn",
       mellomnavn: null,
@@ -63,8 +63,8 @@ export const nySykmeldingVariasjon1Sykmelding = {
       navn: "NAV Test generator",
       versjon: "1.0"
     },
-    syketilfelleStartDato: generatePastDate(2),
-    signaturDato: generatePastDate(2),
+    syketilfelleStartDato: generatePastDate(0),
+    signaturDato: generatePastDate(0),
     navnFastlege: "Doktor Legesen"
   }
 };

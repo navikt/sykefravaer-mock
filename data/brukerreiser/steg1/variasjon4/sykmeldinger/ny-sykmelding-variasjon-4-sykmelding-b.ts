@@ -6,12 +6,12 @@ import {
     generateFutureDate
   } from "../../../../../utils/mockUtils";
   
-  export const nySykmeldingVariasjon2SykmeldingB = {
+  export const nySykmeldingVariasjon4SykmeldingB = {
     status: {
       status: "ny"
     },
     sykmelding: {
-      id: "ny-sykmelding-variasjon-2-sykmelding-b",
+      id: "ny-sykmelding-variasjon-4-sykmelding-b",
       msgId: "123124334",
       pasientAktoerId: "41234123",
       medisinskVurdering: {
@@ -31,7 +31,8 @@ import {
         {
           fom: generateFutureDate(2),
           tom: generateFutureDate(18),
-          reisetilskudd: false
+          reisetilskudd: false,
+          grad: 50
         }
       ],
       prognose: {

@@ -6,12 +6,12 @@ import {
     generateFutureDate
   } from "../../../../../utils/mockUtils";
   
-  export const nySykmeldingVariasjon2SykmeldingB = {
+  export const nySykmeldingVariasjon4SykmeldingA = {
     status: {
       status: "ny"
     },
     sykmelding: {
-      id: "ny-sykmelding-variasjon-2-sykmelding-b",
+      id: "ny-sykmelding-variasjon-4-sykmelding-a",
       msgId: "123124334",
       pasientAktoerId: "41234123",
       medisinskVurdering: {
@@ -23,7 +23,7 @@ import {
       skjermesForPasient: true,
       arbeidsgiver: {
         harArbeidsgiver: "FLERE_ARBEIDSGIVERE",
-        navn: "Brennevin AS",
+        navn: "Planter og andre buskvekster AS",
         yrkesbetegnelse: "Gartner",
         stillingsprosent: 100
       },
