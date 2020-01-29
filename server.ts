@@ -7,6 +7,7 @@ import brukerRouter from "./routes/bruker";
 import sykefravaerRouter from "./routes/sykefravaer";
 import sykmeldingRouter from "./routes/sykmelding";
 import sykmeldingerRouter from "./routes/sykmeldinger";
+import soknadRouter from "./routes/soknad";
 import informasjonRouter from "./routes/informasjon";
 
 import { initializeCache } from "./cache";
@@ -42,6 +43,8 @@ server.use("/sykefravaer", sykefravaerRouter);
 server.use("/sykmelding", sykmeldingRouter);
 // Sykmeldinger routes
 server.use("/sykmeldinger", sykmeldingerRouter);
+// Soknad routes
+server.use("/soknad", soknadRouter);
 // Informasjon routes
 server.use("/informasjon,", informasjonRouter);
 
