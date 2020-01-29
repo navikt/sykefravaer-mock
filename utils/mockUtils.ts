@@ -70,3 +70,22 @@ export const bidiagnoseGenerator = (antall: number) => {
 export const getRandomNumber = (max: number) => {
   return Math.floor(Math.random() * Math.floor(max));
 };
+
+export const generatePastDate = (numberOfDays: number) => {
+  const date = new Date();
+  date.setDate(date.getDate() - numberOfDays);
+  return dateToDateString(date);
+};
+
+export const generateFutureDate = (numberOfDays: number) => {
+  const date = new Date();
+  date.setDate(date.getDate() + numberOfDays);
+  return dateToDateString(date);
+};
+
+export const dateToDateString = (date: Date) => {
+  return date
+    .toISOString()
+    .slice(0, 10)
+    .replace(/-/g, "-");
+};

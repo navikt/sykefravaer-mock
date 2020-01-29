@@ -1,6 +1,6 @@
 import { sykefravaerId } from "../types/sykefravaerTypes";
 
-export type BrukerId = "1" | "2" | "3" | "4" | "5" | "6" | "7";
+export type BrukerId = "variasjon1ny" | "1" | "2" | "3" | "4" | "5" | "6" | "7";
 
 interface Bruker {
   id: BrukerId;
@@ -9,6 +9,17 @@ interface Bruker {
 }
 
 export const brukere: Bruker[] = [
+  {
+    id: "variasjon1ny",
+    label:
+      "Variasjon 1: Ny sykmelding. Brukertype: 1 arbeidsforhold. Sykmeldingstype: 16 dager og under.",
+    sykefravaerIds: [
+      "ny-sykmelding-variasjon-1",
+      "ferdig-sykmelding-variasjon-1-a",
+      "ferdig-sykmelding-variasjon-1-b",
+      "ferdig-sykmelding-variasjon-1-c"
+    ]
+  },
   {
     id: "1",
     label: "Ingen sykmelding, ingen søknader",
