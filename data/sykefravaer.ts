@@ -1,14 +1,6 @@
 import { SykefravaerData } from "../types/sykefravaerTypes";
 
-export const sykefravaer: SykefravaerData[] = [
-  {
-    id: "enNysykmelding",
-    sykmeldinger: ["ny123"]
-  },
-  {
-    id: "enNySykmeldingEnAvvistSykmelding",
-    sykmeldinger: ["ny123", "ny123"]
-  },
+const sykefravaerSteg1: SykefravaerData[] = [
   {
     id: "steg-1-variasjon-1-a",
     sykmeldinger: ["ny-sykmelding-variasjon-1-sykmelding"]
@@ -62,11 +54,17 @@ export const sykefravaer: SykefravaerData[] = [
   },
   {
     id: "steg-1-variasjon-4-a",
-    sykmeldinger: ["ny-sykmelding-variasjon-4-sykmelding-a", "ny-sykmelding-variasjon-4-sykmelding-b"]
+    sykmeldinger: [
+      "ny-sykmelding-variasjon-4-sykmelding-a",
+      "ny-sykmelding-variasjon-4-sykmelding-b"
+    ]
   },
   {
     id: "steg-1-variasjon-4-b",
-    sykmeldinger: ["ny-sykmelding-variasjon-4-sykmelding-c", "ny-sykmelding-variasjon-4-sykmelding-d"]
+    sykmeldinger: [
+      "ny-sykmelding-variasjon-4-sykmelding-c",
+      "ny-sykmelding-variasjon-4-sykmelding-d"
+    ]
   },
   {
     id: "steg-1-variasjon-4-c",
@@ -76,4 +74,14 @@ export const sykefravaer: SykefravaerData[] = [
     id: "steg-1-variasjon-4-d",
     sykmeldinger: ["ferdig-sykmelding-variasjon-2-sykmelding-b"]
   }
+];
+
+const sykefravaerSteg2: SykefravaerData[] = [];
+
+const sykefravaerSteg3: SykefravaerData[] = [];
+
+export const sykefravaer: SykefravaerData[] = [
+  ...sykefravaerSteg1,
+  ...sykefravaerSteg2,
+  ...sykefravaerSteg3
 ];

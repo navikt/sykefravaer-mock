@@ -2,15 +2,25 @@ import { SykmeldingData } from "./sykmeldingDataTypes";
 import { Soknad } from "./soknadTypes/soknadTypes";
 
 export type sykefravaerId =
-  | "ny-sykmelding-variasjon-1"
-  | "ferdig-sykmelding-variasjon-1-a"
-  | "ferdig-sykmelding-variasjon-1-b"
-  | "ferdig-sykmelding-variasjon-1-c"
-  | "enNysykmelding"
-  | "enNySykmeldingEnAvvistSykmelding";
+  | "steg-1-variasjon-1-a"
+  | "steg-1-variasjon-1-b"
+  | "steg-1-variasjon-1-c"
+  | "steg-1-variasjon-1-d"
+  | "steg-1-variasjon-2-a"
+  | "steg-1-variasjon-2-b"
+  | "steg-1-variasjon-2-c"
+  | "steg-1-variasjon-2-d"
+  | "steg-1-variasjon-3-a"
+  | "steg-1-variasjon-3-b"
+  | "steg-1-variasjon-3-c"
+  | "steg-1-variasjon-3-d"
+  | "steg-1-variasjon-4-a"
+  | "steg-1-variasjon-4-b"
+  | "steg-1-variasjon-4-c"
+  | "steg-1-variasjon-4-d";
 
 export class SykefravaerData {
-  id: string; //TODO: change back to sykefravaerId
+  id: sykefravaerId;
   sykmeldinger: string[];
   constructor(data: any) {
     this.id = data.id;
@@ -19,7 +29,7 @@ export class SykefravaerData {
 }
 
 export class Sykefravaer {
-  id: string; //TODO: change back to sykefravaerId
+  id: sykefravaerId;
   sykmeldinger: SykmeldingData[];
   soknader: Soknad[];
 
