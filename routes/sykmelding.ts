@@ -48,6 +48,7 @@ sykmeldingRouter.post("/send/", (req, res) => {
     //Opprett søknad med riktig sykmeldingid
     const { fom, tom } = oppdatertSykmelding.sykmelding.perioder[0]; //Midlertidig. til vi vet hvordan en søknad skal opprettes
     const nySoknad = genererNySoknad(
+      "soknadid",
       id,
       RSSoknadstatus.NY,
       dayjs(fom).format("YYYY-MM-DD"),
@@ -83,7 +84,13 @@ sykmeldingRouter.post("/bekreft/", (req, res) => {
 
     //Opprett søknad med riktig sykmeldingid
     const { fom, tom } = oppdatertSykmelding.sykmelding.perioder[0]; //Midlertidig. til vi vet hvordan en søknad skal opprettes
-    const nySoknad = genererNySoknad(id, RSSoknadstatus.NY, fom, tom);
+    const nySoknad = genererNySoknad(
+      "soknadid",
+      id,
+      RSSoknadstatus.NY,
+      dayjs(fom).format("YYYY-MM-DD"),
+      dayjs(tom).format("YYYY-MM-DD")
+    );
     //console.log(nySoknad);
     const soknaderDb = getSoknaderFraCache();
     cache.set(SOKNAD, [...soknaderDb, nySoknad]);
