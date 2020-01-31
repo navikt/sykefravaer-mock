@@ -4,15 +4,15 @@ import {
   getRandomNumber,
   generatePastDate,
   generateFutureDate
-} from "../../../utils/mockUtils";
+} from "../../../../../utils/mockUtils";
 
-export const ferdigSykmeldingVariasjon1SykmeldingA = {
+export const ferdigSykmeldingVariasjon1SykmeldingC = {
   status: {
     status: "sendt",
-    dato: generatePastDate(195)
+    dato: generatePastDate(349)
   },
   sykmelding: {
-    id: "ferdig-sykmelding-variasjon-1-sykmelding-a",
+    id: "ferdig-sykmelding-variasjon-1-sykmelding-c",
     msgId: "123124334",
     pasientAktoerId: "41234123",
     medisinskVurdering: {
@@ -30,8 +30,8 @@ export const ferdigSykmeldingVariasjon1SykmeldingA = {
     },
     perioder: [
       {
-        fom: generatePastDate(200),
-        tom: generatePastDate(190),
+        fom: generatePastDate(350),
+        tom: generatePastDate(335),
         reisetilskudd: false
       }
     ],
@@ -40,9 +40,9 @@ export const ferdigSykmeldingVariasjon1SykmeldingA = {
     },
     utdypendeOpplysninger: {},
     kontaktMedPasient: {
-      kontaktDato: generatePastDate(200)
+      kontaktDato: generatePastDate(350)
     },
-    behandletTidspunkt: generatePastDate(200),
+    behandletTidspunkt: generatePastDate(350),
     behandler: {
       fornavn: "Fornavn",
       mellomnavn: null,
@@ -64,8 +64,8 @@ export const ferdigSykmeldingVariasjon1SykmeldingA = {
       navn: "NAV Test generator",
       versjon: "1.0"
     },
-    syketilfelleStartDato: generatePastDate(200),
-    signaturDato: generatePastDate(200),
+    syketilfelleStartDato: generatePastDate(350),
+    signaturDato: generatePastDate(350),
     navnFastlege: "Doktor Legesen"
   }
 };
