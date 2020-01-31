@@ -26,12 +26,14 @@
     "morgan": "^1.9.1",
     "morgan-body": "^2.4.8",
     "node-cache": "^5.1.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
     "@types/node": "^13.1.8",
     "@types/node-cache": "^4.2.5",
+    "@types/uuid": "^3.4.7",
     "concurrently": "^5.0.2",
     "nodemon": "^2.0.2",
     "ts-node": "^8.6.2"

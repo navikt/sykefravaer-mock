@@ -45,17 +45,14 @@ sykmeldingRouter.post("/send/", (req, res) => {
 
     cache.set(SYKMELDINGER, [...utenSykmelding, oppdatertSykmelding]);
 
-    //Opprett søknad med riktig sykmeldingid
-    const { fom, tom } = oppdatertSykmelding.sykmelding.perioder[0]; //Midlertidig. til vi vet hvordan en søknad skal opprettes
-    const nySoknad = genererNySoknad(
-      "soknadid",
-      id,
-      RSSoknadstatus.NY,
-      dayjs(fom).format("YYYY-MM-DD"),
-      dayjs(tom).format("YYYY-MM-DD")
-    );
-    const soknaderDb = getSoknaderFraCache();
-    cache.set(SOKNAD, [...soknaderDb, nySoknad]);
+    // Midlertidig henting av fom og tom. Til vi vet hvordan en soknad skal opprettes.
+    const { fom } = oppdatertSykmelding.sykmelding.perioder[0];
+    const { tom } = oppdatertSykmelding.sykmelding.perioder[
+      oppdatertSykmelding.sykmelding.perioder.length - 1
+    ];
+    const nySoknad = genererNySoknad(id, fom, tom, StatusTyper.SENDT);
+    const soknaderFraCache = getSoknaderFraCache();
+    cache.set(SOKNAD, [...soknaderFraCache, nySoknad]);
 
     res.sendStatus(200);
   }
@@ -82,18 +79,14 @@ sykmeldingRouter.post("/bekreft/", (req, res) => {
 
     cache.set(SYKMELDINGER, [...utenSykmelding, oppdatertSykmelding]);
 
-    //Opprett søknad med riktig sykmeldingid
-    const { fom, tom } = oppdatertSykmelding.sykmelding.perioder[0]; //Midlertidig. til vi vet hvordan en søknad skal opprettes
-    const nySoknad = genererNySoknad(
-      "soknadid",
-      id,
-      RSSoknadstatus.NY,
-      dayjs(fom).format("YYYY-MM-DD"),
-      dayjs(tom).format("YYYY-MM-DD")
-    );
-    //console.log(nySoknad);
-    const soknaderDb = getSoknaderFraCache();
-    cache.set(SOKNAD, [...soknaderDb, nySoknad]);
+    /// Midlertidig henting av fom og tom. Til vi vet hvordan en soknad skal opprettes.
+    const { fom } = oppdatertSykmelding.sykmelding.perioder[0];
+    const { tom } = oppdatertSykmelding.sykmelding.perioder[
+      oppdatertSykmelding.sykmelding.perioder.length - 1
+    ];
+    const nySoknad = genererNySoknad(id, fom, tom, StatusTyper.SENDT);
+    const soknaderFraCache = getSoknaderFraCache();
+    cache.set(SOKNAD, [...soknaderFraCache, nySoknad]);
 
     res.sendStatus(200);
   }
