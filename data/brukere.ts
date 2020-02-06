@@ -49,7 +49,7 @@ export const brukere: Bruker[] = [
   {
     id: "steg-1-variasjon-4",
     label:
-      "Variasjon 1: Ny sykmelding. Brukertype: 2 arbeidsforhold. Sykmeldingstype: 17 dager til 18 uker (2 perioder usammenhengende).",
+      "Variasjon 4: Ny sykmelding. Brukertype: 2 arbeidsforhold. Sykmeldingstype: 17 dager til 18 uker (2 perioder usammenhengende).",
     sykefravaerIds: [
       "steg-1-variasjon-4-a",
       "steg-1-variasjon-4-b",
