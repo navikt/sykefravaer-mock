@@ -8,8 +8,8 @@ import { StatusTyper } from "../types/sykmeldingTypes";
 
 export const genererNySoknad = (
   sykmeldingId: string,
-  sykmeldingFom: Date,
-  sykmeldingTom: Date,
+  sykmeldingFom: string,
+  sykmeldingTom: string,
   sykmeldingSendtEllerBekreftet?: StatusTyper
 ): Soknad => {
   const erIFremTiden = dayjs(sykmeldingTom).isAfter(dayjs(new Date()));

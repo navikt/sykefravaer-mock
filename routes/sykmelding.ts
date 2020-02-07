@@ -50,7 +50,12 @@ sykmeldingRouter.post("/send/", (req, res) => {
     const { tom } = oppdatertSykmelding.sykmelding.perioder[
       oppdatertSykmelding.sykmelding.perioder.length - 1
     ];
-    const nySoknad = genererNySoknad(id, fom, tom, StatusTyper.SENDT);
+    const nySoknad = genererNySoknad(
+      id,
+      fom.toUTCString(),
+      tom.toUTCString(),
+      StatusTyper.SENDT
+    );
     const soknaderFraCache = getSoknaderFraCache();
     cache.set(SOKNAD, [...soknaderFraCache, nySoknad]);
 
@@ -84,7 +89,7 @@ sykmeldingRouter.post("/bekreft/", (req, res) => {
     const { tom } = oppdatertSykmelding.sykmelding.perioder[
       oppdatertSykmelding.sykmelding.perioder.length - 1
     ];
-    const nySoknad = genererNySoknad(id, fom, tom, StatusTyper.SENDT);
+    const nySoknad = genererNySoknad(id, fom.toUTCString(), tom.toUTCString(), StatusTyper.SENDT);
     const soknaderFraCache = getSoknaderFraCache();
     cache.set(SOKNAD, [...soknaderFraCache, nySoknad]);
 

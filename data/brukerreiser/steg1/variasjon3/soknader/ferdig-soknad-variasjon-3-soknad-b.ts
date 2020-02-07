@@ -1,11 +1,11 @@
 import { genererNySoknad } from "../../../../../utils/soknadUtils";
 import { RSSoknadstatus } from "../../../../../types/soknadTypes/rs-types/rs-soknadstatus";
 import { generatePastDate } from "../../../../../utils/mockUtils";
+import { StatusTyper } from "../../../../../types/sykmeldingTypes";
 
 export const ferdigSoknadVariasjon3SoknadB = genererNySoknad(
-  "ferdig-soknad-variasjon-3-soknad-b",
   "ferdig-sykmelding-variasjon-3-sykmelding-b",
-  RSSoknadstatus.SENDT,
   generatePastDate(351),
-  generatePastDate(344)
+  generatePastDate(344),
+  StatusTyper.SENDT
 );
