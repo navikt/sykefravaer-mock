@@ -1,5 +1,6 @@
 import { SykmeldingData } from "./sykmeldingDataTypes";
 import { Soknad } from "./soknadTypes/soknadTypes";
+import dayjs = require("dayjs");
 
 export type sykefravaerId =
   | "steg-1-variasjon-1-a"
@@ -21,20 +22,28 @@ export type sykefravaerId =
 
 export class SykefravaerData {
   id: sykefravaerId;
+  fom: string;
+  tom: string;
   sykmeldinger: string[];
   constructor(data: any) {
     this.id = data.id;
+    this.fom = data.fom;
+    this.tom = data.tom;
     this.sykmeldinger = data.sykmeldinger;
   }
 }
 
 export class Sykefravaer {
   id: sykefravaerId;
+  fom: string;
+  tom: string;
   sykmeldinger: SykmeldingData[];
   soknader: Soknad[];
 
   constructor(data: any) {
     this.id = data.id;
+    this.fom = data.fom;
+    this.tom = data.tom;
     this.sykmeldinger = data.sykmeldinger;
     this.soknader = data.soknader;
   }
